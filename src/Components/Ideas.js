@@ -75,14 +75,15 @@ function Ideas() {
 
   return (
     <div className="container">
+      <div className={classes.Ideas}><Link to='/dashboard' className={classes.idealink}> Ideas</Link></div>
       <div className={classes.resultGrid}>
-        <h3>IDEAS</h3>
+        <div className={classes.linkgrid}>
         <Link to='/ideas' className={classes.link}>Total Ideas</Link>
         <Link to='/ideas?status=onHold' className={classes.link}>On Hold</Link>
         <Link to='/ideas?status=INProgress' className={classes.link}>In Progress</Link>
         <Link to='/ideas?status=POC Started' className={classes.link}>POC Started</Link>
         <Link to='/ideas?status=New' className={classes.link}>New</Link>
-
+        </div>
         {/* <button className={`${classes.addIdeaNutton} btn btn-primary`}>ADD IDEA</button> */}
 
 

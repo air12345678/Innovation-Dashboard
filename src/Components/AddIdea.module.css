@@ -22,3 +22,13 @@ input[type=text]{
 .inputControl{
     border:1.5px solid black
 }
+
+.newIdea{
+    background-color: rgb(46, 45, 45);
+    color: white;
+    border: 2px solid black;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size:x-large;
+    margin-bottom: 20px;
+}

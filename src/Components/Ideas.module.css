@@ -1,12 +1,21 @@
 .resultGrid{
-    border:1px solid black;
+    border:2px solid black;
     border-radius: 5px;
     margin:20px;
+    
 }
 .link{
     color: black;
     margin-left: 20px;
+    margin-bottom: 50px;
+}
 
+.link:focus{
+    color: rgb(207, 130, 238);
+    font-weight: bold;
+}
+.idealink{
+    color: white;
 }
 .addIdeaNutton{
     margin-left: 380px;
@@ -33,3 +42,17 @@ td{
     text-align: center;
 }
 
+.Ideas{
+    background-color: rgb(46, 45, 45);
+    color: white;
+    border: 2px solid black;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size:x-large;
+    margin-bottom: 20px;
+    width: auto;
+}
+
+.linkgrid{
+    margin-bottom: 15px;
+}

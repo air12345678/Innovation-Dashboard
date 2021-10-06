@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import classes from './Dashboard.module.css';
 import axios from "axios";
+import Menu from "./Menu";
 
 const Dashboard = () => {
   const baseURL = "https://jsonplaceholder.typicode.com/users";
@@ -40,7 +41,8 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="container">
+    <div><Menu/>
+    <div className="container">     
       <button className={classes.dashboardButton}
         id="btn1"
         onClick={dashboardHandler}
@@ -73,10 +75,10 @@ const Dashboard = () => {
             <h2 className={classes.ideaHeader}>IDEAS</h2>
             <ul className={classes.ideaContent}>
              
-              <li><Link to ='/ideas' className={classes.link}>TOTAL IDEAS:</Link>{userList.length}</li>
+              <li><Link to ='/ideas' className={classes.link}>TOTAL IDEAS:</Link>4</li>
               <li>ACCEPTED</li>
-              <li>PENDING/UNDER DISCUSSION</li>
-              <li>POC Started</li>
+              <li><Link to ='/ideas?status=INProgress' className={classes.link}>PENDING/UNDER DISCUSSION:</Link>1</li>
+              <li><Link to ='/ideas?status=POC Started' className={classes.link}>POC Started:</Link>1</li>
             </ul>
           </div>
           <div className={classes.cheerboard}>
@@ -112,6 +114,7 @@ const Dashboard = () => {
       </div>
     </div>
     </div >
+    </div>
   );
 }
 

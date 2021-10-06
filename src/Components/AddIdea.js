@@ -73,9 +73,9 @@ const AddIdea = () => {
 
         
         <div>
-            
             <form>
                 <div className="container">
+                    <div className={classes.newIdea}>New Idea</div>
                     <div className="row">
                         <div className="col-lg-6 col-md-6 col-12">
                             <label htmlFor="ideatitle">IDEA TITLE</label>
@@ -119,7 +119,7 @@ const AddIdea = () => {
                                 value={values.pros}></textarea>
                         </div>
                         <div className="col-lg-6 col-md-6 col-12">
-                            <label htmlFor="cons">BUSINESS VALUES($)</label>
+                            <label htmlFor="cons">BUSINESS VALUES ($)</label>
                             <textarea className={`${classes.inputControl} form-control`}
                                 name="cons"
                                 id="cons"

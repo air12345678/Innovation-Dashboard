@@ -8,7 +8,7 @@ import Ideas from './Components/Ideas';
 function App() {
   return (
     <div>
-      <Menu/>
+      {/* <Menu/> */}
       <Switch>
         <Route exact path ='/' component ={Dashboard}/>
         <Route path ='/dashboard' component ={Dashboard}/>
