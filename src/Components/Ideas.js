@@ -13,11 +13,12 @@ const baseURL = "https://jsonplaceholder.typicode.com/users";
 
 function Ideas() {
   var today = new Date();
+  const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
   const myData = [
-    { ideaname: 'Style Savor', ideator: 'Kaushal', status: 'On Hold', applicationname: 'BD', date: today.getDate() },
-    { ideaname: 'Health Harbor', ideator: 'Vikas', status: 'In Progress', applicationname: 'Pipeline Manangement', date: today.getDate() },
-    { ideaname: 'Jump And Rise', ideator: 'Himanshu', status: 'POC Started', applicationname: 'Revenue Accounting', date: today.getDate() },
-    { ideaname: 'Web Wise', ideator: 'Harmeet', status: 'New', applicationname: 'CPC', date: today.getDate() },
+    { ideaname: 'Rail Cargo Management Solution', ideator: 'Kaushal', status: 'On Hold', applicationname: 'BD', date:date},
+    { ideaname: 'Traffic Management System', ideator: 'Vikas', status: 'In Progress', applicationname: 'Pipeline Manangement', date: date},
+    { ideaname: 'Enterprise Asset Management', ideator: 'Himanshu', status: 'POC Started', applicationname: 'Revenue Accounting', date: date},
+    { ideaname: 'Mobile Work Management Solutions', ideator: 'Harmeet', status: 'New', applicationname: 'CPC', date: date},
   ]
   const [userList, setUSerList] = useState(myData);
   const { ExportCSVButton } = CSVExport;
