@@ -6,7 +6,7 @@ const AddIdea = () => {
     let history = useHistory();
     //Initial Values //
     const initialValues = {
-        // ideator: "",
+        ideatitle: "",
         // team: "",
         id:null,
         application: "",
@@ -40,7 +40,7 @@ const AddIdea = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         const value = {
-            // ideator: values.ideator,
+            ideatitle: values.ideatitle,
             // team: values.team,
             application: values.application,
            // status: values.status,
@@ -77,22 +77,15 @@ const AddIdea = () => {
             <form>
                 <div className="container">
                     <div className="row">
-                        {/* <div className="col-lg-6 col-md-6 col-12">
-                            <label htmlFor="ideator">IDEATOR</label>
-                            <input className={`${classes.inputControl} form-control`}
-                                name="ideator"
-                                id="ideator"
-                                onChange={handleInputChange}
-                                value={values.ideator} />
-                        </div>
                         <div className="col-lg-6 col-md-6 col-12">
-                            <label htmlFor="team">TEAM</label>
+                            <label htmlFor="ideatitle">IDEA TITLE</label>
                             <input className={`${classes.inputControl} form-control`}
-                                name="team"
-                                id="team"
+                                name="ideatitle"
+                                id="ideatitle"
                                 onChange={handleInputChange}
-                                value={values.team} />
-                        </div> */}
+                                value={values.ideatitle} />
+                        </div>
+                        
                         <div className="col-lg-6 col-md-6 col-12">
                             <label htmlFor="application">APPLICATION</label>
                             <input className={`${classes.inputControl} form-control`}
@@ -101,23 +94,7 @@ const AddIdea = () => {
                                 onChange={handleInputChange}
                                 value={values.application} />
                         </div>
-                        {/* <div className={`${classes.extradiv} col-lg-6 col-md-6 col-12`}>
-                            <label htmlFor="status">Idea Status</label>
-                            <select name="status" className={`${classes.inputControl} form-control`}
-                                id="status"
-                                onChange={handleInputChange}
-                                value={values.status}>
-                                <option value="">Select the Value</option>
-                                {actions.map((value, key) => (
-                                    <option key={key} value={value.label}>
-                                        {value.label}
-                                    </option>
-                                ))}
-                            </select>
-                            <label htmlFor="Execution Time">Execution Time</label>
-                            <p className={`${classes.datetext} form-control`}>{date}</p>
-                        </div> */}
-                        <div className="col-lg-6 col-md-6 col-12">
+                        <div className="col-lg-12 col-md-12 col-12">
                             <label htmlFor="problemstatement">PROBLEM STATEMENT</label>
                             <textarea className={`${classes.inputControl} form-control`}
                                 name="problemstatement"
@@ -125,7 +102,7 @@ const AddIdea = () => {
                                 onChange={handleInputChange}
                                 value={values.problemstatement}></textarea>
                         </div>
-                        <div className="col-lg-6 col-md-6 col-12">
+                        <div className="col-lg-12 col-md-12 col-12">
                             <label htmlFor="proposedSolution">PROPOSED SOLUTION</label>
                             <textarea className={`${classes.inputControl} form-control`}
                                 name="proposedSolution"
@@ -134,7 +111,7 @@ const AddIdea = () => {
                                 value={values.proposedSolution}></textarea>
                         </div>
                         <div className="col-lg-6 col-md-6 col-12">
-                            <label htmlFor="pros">PROS</label>
+                            <label htmlFor="pros">BENEFITS</label>
                             <textarea className={`${classes.inputControl} form-control`}
                                 name="pros"
                                 id="pros"
@@ -142,7 +119,7 @@ const AddIdea = () => {
                                 value={values.pros}></textarea>
                         </div>
                         <div className="col-lg-6 col-md-6 col-12">
-                            <label htmlFor="cons">CONS</label>
+                            <label htmlFor="cons">BUSINESS VALUES($)</label>
                             <textarea className={`${classes.inputControl} form-control`}
                                 name="cons"
                                 id="cons"
