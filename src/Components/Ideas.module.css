@@ -1,0 +1,35 @@
+.resultGrid{
+    border:1px solid black;
+    border-radius: 5px;
+    margin:20px;
+}
+.link{
+    color: black;
+    margin-left: 20px;
+
+}
+.addIdeaNutton{
+    margin-left: 380px;
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 1100px) {
+.addIdeaNutton{
+    margin-left: 290px;
+    margin-bottom: 10px;
+}
+.link{
+    margin-left: 10px;
+}
+}
+
+.tableheader{
+    background-color: rgb(68, 67, 67);
+    color: white;
+    text-align: center;
+}
+
+td{
+    text-align: center;
+}
+
