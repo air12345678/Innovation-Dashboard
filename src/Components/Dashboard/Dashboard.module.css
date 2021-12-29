@@ -1,0 +1,14 @@
+.headers{
+    margin:20px;
+    text-align: center;
+}
+
+.card{
+    height: auto;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.cardTitle{
+    font-size:30px;
+    font-family:Georgia, 'Times New Roman', Times, serif
+}

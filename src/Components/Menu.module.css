@@ -1,6 +1,7 @@
 
 .username{
     color: white;
+    margin-top: 20px;
     
 }
 .user{
@@ -10,4 +11,50 @@
 }
 .brand{
     font-weight: bold;
+    margin-left: -40px;
 }
+.navbar{
+    height: 70px;
+}
+
+
+.svg{
+    height: 50px;
+    margin-left: -30px;
+}
+@media  only screen and (max-width: 800px){
+    .brand{
+        font-weight: bold;
+        margin-left: -10px;
+    }
+    .navbar{
+        height: auto;
+    }
+    .svg{
+        height: 50px;
+        margin-left: 12px;
+    }
+}
+/* @media (min-width: 500px ) and (max-width: 769px ){
+    .navbar{
+        height: auto;
+    }
+    
+    .brand{
+        font-weight: bold;
+        margin-left: -400px;
+    }
+    .svg{
+        height: 50px;
+        margin-left: -10px;
+    }
+} */
+.userdiv{
+    margin-top: 20px;
+}
+.name {
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+    
+ }

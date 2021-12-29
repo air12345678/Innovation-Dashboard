@@ -10,10 +10,12 @@
     margin-bottom: 50px;
 }
 
-.link:focus{
-    color: rgb(207, 130, 238);
+ .link:focus{ 
+    color: rgb(118, 25, 158);
     font-weight: bold;
 }
+
+
 .idealink{
     color: white;
 }
@@ -55,4 +57,13 @@ td{
 
 .linkgrid{
     margin-bottom: 15px;
+}
+
+.resultGrid1{
+   margin-top: 40px;
+    background: transparent;
+}
+
+.dataGrid{
+    color: tomato;
 }

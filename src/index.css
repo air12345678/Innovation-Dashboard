@@ -5,7 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-color:rgba(19, 204, 13, 0.39); */
+  background: url(./Images/backgroundimage.png);
+  /* background-repeat: no-repeat; */
+  background-size: 100%;
+  background-position-y:center;
 }
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
