@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid, GridApi } from '@mui/x-data-grid';
+import { DataGrid, GridApi, GridToolbar, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import classes from './Ideas.module.css';
 import axios from "axios";
 import { makeStyles } from '@mui/styles';
@@ -7,6 +7,7 @@ import Menu from "../Menu";
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { gridClasses } from '@mui/material';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,6 +42,7 @@ export default function Ideas(props) {
     { id: 4, ideaname: 'Mobile Work Management Solutions', ideator: 'Harmeet', status: 'New', applicationname: 'CPC', date: date },
   ]
   const [ideasList, setIdeasList] = React.useState([]);
+  const [pageSize, setPageSize] = React.useState(10);
   React.useEffect(() => {
     getData();
   }, [])
@@ -52,29 +54,40 @@ export default function Ideas(props) {
     const myRepo = response.data.resultData;
     setIdeasList(myRepo)
   }
+
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer className={gridClasses.toolbarContainer}>
+        <GridToolbarExport  />
+      </GridToolbarContainer>
+    );
+  }
   const columns = [
     { field: 'ideatitle', headerName: 'IdeaName', headerAlign: 'center', width: 180, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
-    { field: 'ideator', headerName: 'Ideator', headerAlign: 'center', headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
+    { field: 'ideator', headerName: 'Ideator', headerAlign: 'center', width: 180, headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
     { field: 'email_address', headerName: 'Email', width: 180, headerAlign: 'center', headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
     { field: 'estimate', headerName: 'Status', width: 180, headerAlign: 'center', headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
+    { field: 'LOB', headerName: 'LOB', width: 180, headerAlign: 'center', headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
     { field: 'Application', headerName: 'Application Name', width: 200, headerAlign: 'center', headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
-    // { field: 'Crtd_time', headerName: 'Date', width: 180, headerAlign: 'center', headerClassName: 'super-app-theme--header',cellClassName: 'super-app-theme--cell' },
+    { field: 'crtd_time', headerName: 'Date', width: 180, headerAlign: 'center', headerClassName: 'super-app-theme--header', cellClassName: 'super-app-theme--cell' },
 
     {
       field: "Action",
-      width: 180,
+      width: 190,
       sortable: false,
       headerClassName: 'super-app-theme--header',
       headerAlign: 'center',
       renderCell: (cellValues) => {
         return (
           <div>
-            <i className="fa fa-edit" style={{ marginLeft: '40px', cursor: 'pointer' }}
+            <i class="fa fa-info-circle" aria-hidden="true" style={{ marginLeft: '40px', cursor: 'pointer' }} title="Details"
+              onClick={() => detailsHandler(cellValues.id)}></i>
+            <i className="fa fa-edit" style={{ marginLeft: '20px', cursor: 'pointer' }}
               onClick={() => editHandler(cellValues.id)} title="Edit"></i>
             <i className="fa fa-trash" aria-hidden="true" style={{ marginLeft: '20px', cursor: 'pointer' }} title="Delete"
               onClick={() => {
                 confirmAlert({
-                  title: 'Confirm to submit',
+                  // title: 'Confirm to submit',
                   message: 'Are you sure want to delete.',
                   buttons: [
                     {
@@ -88,8 +101,8 @@ export default function Ideas(props) {
                   ]
                 });
               }}></i>
-            <i class="fa fa-info-circle" aria-hidden="true" style={{ marginLeft: '20px', cursor: 'pointer' }} title="Details"
-              onClick={() => detailsHandler(cellValues.id)}></i>
+            {/* <i class="fa fa-info-circle" aria-hidden="true" style={{ marginLeft: '20px', cursor: 'pointer' }} title="Details"
+              onClick={() => detailsHandler(cellValues.id)}></i> */}
 
 
           </div>
@@ -125,9 +138,10 @@ export default function Ideas(props) {
     <div>
       <Menu />
       <div style={{
-        height: 400,
-        width: '82.26%',
-
+        height: 200,
+        // width: '89.74%',
+        width: '100%',
+        borderRadius:'10px'
       }}
         className={`${classes.resultGrid1} container`}>
         <div>
@@ -149,6 +163,7 @@ export default function Ideas(props) {
               backgroundColor: 'black',
               color: 'white',
               fontSize: 20,
+
             },
             '& .super-app-theme--cell': {
 
@@ -157,10 +172,17 @@ export default function Ideas(props) {
           }}
           getRowClassName={(cellValues) => `styledrows`}
           columns={columns}
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[10, 20, 30]}
+          pagination
+          // componentsProps={{ toolbar: { csvOptions: { fields: ['ideatitle','ideator','Application', 'LOB','problemstatement','proposedSolution','benefits','businessvalues','comments'] } } }}
+          components={{
+            Toolbar: CustomToolbar,
+          }}
+      />}
 
-        />}
-
-        {name == 'onHold' && <DataGrid
+        {name == 'onHold' && <DataGrid autoHeight
           className={Class.root}
           rows={ideasList.filter(value => value.estimate === 'OnHold')}
           sx={{
@@ -177,9 +199,12 @@ export default function Ideas(props) {
           }}
           getRowClassName={(params) => `styledrows`}
           columns={columns}
-
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[5, 10, 20]}
+          pagination
         />}
-        {name == 'INProgress' && <DataGrid
+        {name == 'INProgress' && <DataGrid autoHeight
           className={Class.root}
           rows={ideasList.filter(value => value.estimate === 'In Progress')}
           sx={{
@@ -196,9 +221,12 @@ export default function Ideas(props) {
           }}
           getRowClassName={(params) => `styledrows`}
           columns={columns}
-
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[5, 10, 20]}
+          pagination
         />}
-        {name == 'POC Started' && <DataGrid
+        {name == 'POC Started' && <DataGrid autoHeight
           className={Class.root}
           rows={ideasList.filter(value => value.estimate === 'POC Started')}
           sx={{
@@ -215,9 +243,12 @@ export default function Ideas(props) {
           }}
           getRowClassName={(params) => `styledrows`}
           columns={columns}
-
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[5, 10, 20]}
+          pagination
         />}
-        {name == 'New' && <DataGrid
+        {name == 'New' && <DataGrid autoHeight
           className={Class.root}
           rows={ideasList.filter(value => value.estimate === 'New')}
           sx={{
@@ -234,9 +265,12 @@ export default function Ideas(props) {
           }}
           getRowClassName={(params) => `styledrows`}
           columns={columns}
-
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[5, 10, 20]}
+          pagination
         />}
-        {name == 'POC Finished' && <DataGrid
+        {name == 'POC Finished' && <DataGrid autoHeight
           className={Class.root}
           rows={ideasList.filter(value => value.estimate === 'POC Finished')}
           sx={{
@@ -253,9 +287,12 @@ export default function Ideas(props) {
           }}
           getRowClassName={(params) => `styledrows`}
           columns={columns}
-
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[5, 10, 20]}
+          pagination
         />}
-        {name == 'Finalized' && <DataGrid
+        {name == 'Finalized' && <DataGrid autoHeight
           className={Class.root}
           rows={ideasList.filter(value => value.estimate === 'Finalized')}
           sx={{
@@ -272,7 +309,10 @@ export default function Ideas(props) {
           }}
           getRowClassName={(params) => `styledrows`}
           columns={columns}
-
+          pageSize={pageSize}
+          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+          rowsPerPageOptions={[5, 10, 20]}
+          pagination
         />}
       </div>
 

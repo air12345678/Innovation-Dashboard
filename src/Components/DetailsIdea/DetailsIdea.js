@@ -86,6 +86,7 @@ const style = {
                     <li className={classes.contentBasicData}><span style={{fontWeight:"bold",fontSize:"20px"}}>Title :</span> {value.ideatitle}</li>
                   <br/>  <li className={classes.contentBasicData}><span style={{fontWeight:"bold",fontSize:"20px"}}>Application Name : </span> {value.Application}</li>
                   <br/>  <li className={classes.contentBasicData}><span style={{fontWeight:"bold",fontSize:"20px"}}>Ideator : </span>{value.ideator}</li>
+                  <br/>  <li className={classes.contentBasicData}><span style={{fontWeight:"bold",fontSize:"20px"}}>Email : </span>{value.email_address}</li>
                    <br/> <li className={classes.contentBasicData}><span style={{fontWeight:"bold",fontSize:"20px"}}>Status : </span>{value.estimate}</li>
                 </ul>
                 </Card.Text>

@@ -10,6 +10,7 @@ const EditIdea = () => {
     const [idea, setIdea] = useState({
         ideatitle: "",
         ideator: "",
+        lob:"",
         Application: "",
         status: "",
         problemstatement: "",
@@ -38,6 +39,7 @@ const EditIdea = () => {
         setIdea({
             ideatitle: response.data.resultData[0].ideatitle,
             ideator: response.data.resultData[0].ideator,
+            lob: response.data.resultData[0].LOB,
             Application: response.data.resultData[0].Application,
             status: response.data.resultData[0].estimate,
             problemstatement: response.data.resultData[0].problemstatement,
@@ -57,6 +59,7 @@ const EditIdea = () => {
         const datatobeUpdate = {
             id: id,
             ideatitle: idea.ideatitle,
+            lob:idea.lob,
             Application: idea.Application,
             status: idea.status,
             problemstatement: idea.problemstatement,
@@ -64,7 +67,7 @@ const EditIdea = () => {
             benefits: idea.benefits,
             businessvalues: idea.businessvalues,
             comments: idea.businessvalues,
-            Updtd_time: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            Updtd_time: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getHours()+':'+today.getMinutes()+':'+today.getSeconds(),
             Updtd_by: b
         }
 
@@ -96,6 +99,16 @@ const EditIdea = () => {
 
                     <label>Ideator</label>
                     <input className="form-control" type="text" name="ideatitle" placeholder="Idea Title" onChange={handleInputChange} value={idea.ideator} disabled />
+                
+                    <label>LOB</label>
+                    <select name="lob" className="form-control"
+                        id="lob" value={idea.lob} onChange={handleInputChange}>
+                        <option value="" disabled> None</option>
+                        <option value="IT">IT</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Equipment">Equipment</option>
+                    </select>
+                
                     <label>Application</label>
                     <input className="form-control" type="text" name="Application" placeholder="Application" onChange={handleInputChange} value={idea.Application} />
 

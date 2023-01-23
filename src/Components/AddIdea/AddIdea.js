@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import Button from '@mui/material/Button';
 import Menu from "../Menu";
 import classes from './AddIdea.module.css';
@@ -57,11 +57,13 @@ const AddIdea = () => {
     }
     const { register, control, handleSubmit, formState: { errors, isSubmitSuccessful } } = useForm();
     const [values, setValues] = useState(initialValue)
-    const [file, setFile] = useState([]);
+    var [files, setFiles] = useState([]);
     const [fileName, setFileName] = useState("");
 
     const saveFile = (e) => {
-        setFile(e.target.files);
+        alert(e.target.files.length)
+        setFiles(e.target.files)
+
         // setFileName(e.target.files.name);
     };
 
@@ -70,11 +72,14 @@ const AddIdea = () => {
     var c = localStorage.getItem('email');
     var d = JSON.parse(c);
     var today = new Date()
+    console.log("Today" + today);
     const onSubmit = (data, e) => {
+
         e.preventDefault();
         const value = {
             id: 0,
             ideatitle: data.ideatitle,
+            lob: data.lob,
             Application: data.Application,
             problemstatement: data.problemstatement,
             proposedSolution: data.proposedSolution,
@@ -84,10 +89,11 @@ const AddIdea = () => {
             status: "New",
             ideator: b,
             email: d,
-            crtd_time: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate(),
+            crtd_time: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + '-' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds(),
             Crtd_by: b,
             Updtd_time: null,
-            Updtd_by: null
+            Updtd_by: null,
+
         }
         console.log(value);
         // axios.post('http://localhost:8080/api/ideas',value)
@@ -117,18 +123,21 @@ const AddIdea = () => {
                     onClick: () => {
                         axios.post('http://localhost:8080/api/ideas', value)
                             .then((response) => {
-                                console.log(response.data.resultData);
+                                console.log("ResultData" + response.data.resultData);
+                                console.log(response.statusText);
                                 if (response.statusText == "Success") {
                                     const formData = new FormData();
-                                    for (let i = 0; i < file.length; i++) {
-                                        formData.append('file', file[i]);
-                                        // formData.append('idea_id', response.data.resultData)
-                                        // formData.append('crtd_by', b)
-                                        // formData.append('crtd_dt', today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate())
+                                    console.log("Files" + files);
+                                    for (let i = 0; i < files.length; i++) {
+
+                                        formData.append('file', files[i]);
                                     }
+                                    formData.append('idea_id', response.data.resultData)
+                                    formData.append('crtd_by', b)
+                                    formData.append('crtd_dt', today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate())
 
                                     console.log(formData);
-                                    axios.post("http://localhost:8080/api/ideas/uploadfile", formData)
+                                    axios.post("http://localhost:8080/api/uploadFile", formData)
                                         .then((result) => {
                                             if (result.statusText == "Success") {
                                                 confirmAlert({
@@ -153,12 +162,13 @@ const AddIdea = () => {
 
         // }
         //})
-        e.target.reset();
+        // e.target.reset();
 
     }
     const backButtonHandler = () => {
         history.push('/dashboard')
     }
+  
     return (
         <div>
             <Menu />
@@ -177,7 +187,7 @@ const AddIdea = () => {
                                 labelWidth={40}
                                 helperText={errors.ideatitle ? errors.ideatitle.message : null}
                                 variant="outlined"
-                                label="IDEA TITLE"
+                                label="Idea Title"
                                 error={errors.ideatitle}
 
                             />)
@@ -185,13 +195,62 @@ const AddIdea = () => {
                         control={control}
                         defaultValue=""
                         rules={{
-                            required: 'Title is required',
-                            pattern: {
-                                value: /^(?!\s)[A-Za-z-0-9,.()\s]+$/,
-                                message: "TITLE is in invalid Format"
-                            }
+                            required: 'Idea Title is required',
+                            // pattern: {
+                            //     value: /^(?!\s)[A-Za-z-0-9,.()\s]+$/,
+                            //     message: "TITLE is in invalid Format"
+                            // }
                         }}
                     />
+                    <br />
+
+                    {/* <FormControl sx={{ m: 1, minWidth: '512px' }}> */}
+                    {/* <InputLabel id="LOB">LOB</InputLabel> */}
+                    <Controller
+
+                        name="lob"
+                        render={({ field }) => (
+                            // <Select
+                            //     id="LOB"
+                            //     label="LOB"
+                            //     labelId="LOB"
+                            //     variant="outlined"
+                            //     error={errors.lob}
+
+                            // >
+                            //     <MenuItem value="">
+                            //         <em>None</em>
+                            //     </MenuItem>
+                            //     <MenuItem value="IT">IT</MenuItem>
+                            //     <MenuItem value="Finance">Finance</MenuItem>
+                            //     <MenuItem value="Equipment">Equipment</MenuItem>
+                            // </Select>
+                            <TextField select
+                                sx={{ m: 1, width: '64ch' }}
+                                {...field}
+                                id="LOB"
+                                labelWidth={40}
+                                helperText={errors.lob ? errors.lob.message : null}
+                                variant="outlined"
+                                label="LOB"
+                                error={errors.lob}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value="IT">IT</MenuItem>
+                                <MenuItem value="Finance">Finance</MenuItem>
+                                <MenuItem value="Equipment">Equipment</MenuItem>
+                            </TextField>
+                        )
+                        }
+                        control={control}
+                        defaultValue=""
+                        rules={{
+                            required: 'LOB is required'
+                        }}
+                    />
+                    {/* </FormControl> */}
                     <br />
                     <Controller
                         name="Application"
@@ -211,10 +270,10 @@ const AddIdea = () => {
                         defaultValue=""
                         rules={{
                             required: 'Application is required',
-                            pattern: {
-                                value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
-                                message: "Application is in invalid Format"
-                            }
+                            // pattern: {
+                            //     value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
+                            //     message: "Application is in invalid Format"
+                            // }
                         }}
                     />
                     <br />
@@ -238,10 +297,10 @@ const AddIdea = () => {
                         defaultValue=""
                         rules={{
                             required: 'Problem Statement is required',
-                            pattern: {
-                                value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
-                                message: "Problem Statement is in invalid Format"
-                            }
+                            // pattern: {
+                            //     value: /^(?!\s)[A-Za-z-0-9,.()\s]+$/,
+                            //     message: "Problem Statement is in invalid Format"
+                            // }
                         }} />
 
                     <br />
@@ -257,18 +316,18 @@ const AddIdea = () => {
                                 labelWidth={40}
                                 helperText={errors.proposedSolution ? errors.proposedSolution.message : null}
                                 variant="outlined"
-                                label="PROPOSED SOLUTION"
+                                label="Proposed Solution"
                                 error={errors.proposedSolution}
                             />)
                         }
                         control={control}
                         defaultValue=""
                         rules={{
-                            required: 'PROPOSED SOLUTION is required',
-                            pattern: {
-                                value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
-                                message: "PROPOSED SOLUTION is in invalid Format"
-                            }
+                            required: 'Proposed Solution is required',
+                            // pattern: {
+                            //     value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
+                            //     message: "Proposed Solution is in invalid format"
+                            // }
                         }} />
                     <br />
                     <Controller
@@ -279,22 +338,22 @@ const AddIdea = () => {
                                 {...field}
                                 multiline
                                 rows={5}
-                                id="BENEFITS"
+                                id="Benefits"
                                 labelWidth={40}
                                 helperText={errors.benefits ? errors.benefits.message : null}
                                 variant="outlined"
-                                label="BENEFITS"
+                                label="Benefits"
                                 error={errors.benefits}
                             />)
                         }
                         control={control}
                         defaultValue=""
                         rules={{
-                            required: 'BENEFITS is required',
-                            pattern: {
-                                value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
-                                message: "BENEFITS is in invalid Format"
-                            }
+                            required: 'Benefits is required',
+                            // pattern: {
+                            //     value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
+                            //     message: "Benefits is in invalid format"
+                            // }
                         }} />
                     <br />
                     <Controller
@@ -309,18 +368,18 @@ const AddIdea = () => {
                                 labelWidth={40}
                                 helperText={errors.businessvalues ? errors.businessvalues.message : null}
                                 variant="outlined"
-                                label="BUSINESS VALUES($)"
+                                label="Business Values($)"
                                 error={errors.businessvalues}
                             />)
                         }
                         control={control}
                         defaultValue=""
                         rules={{
-                            required: 'BUSINESS VALUES is required',
-                            pattern: {
-                                value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
-                                message: "BUSINESS VALUES is in invalid Format"
-                            }
+                            required: 'Business Values is required',
+                            // pattern: {
+                            //     value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
+                            //     message: "Business Values is in invalid format"
+                            // }
                         }} />
                     <br />
                     <Controller
@@ -343,10 +402,10 @@ const AddIdea = () => {
                         defaultValue=""
                         rules={{
                             required: 'Comments is required',
-                            pattern: {
-                                value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
-                                message: "Comments in invalid Format"
-                            }
+                            // pattern: {
+                            //     value: /^(?!\s)[A-Za-z-0-9,()\s]+$/,
+                            //     message: "Comments in invalid Format"
+                            // }
                         }} />
                     <br />
                     <input type="file" className="form-control ml-2" multiple style={{ width: '64ch' }} onChange={saveFile} />
